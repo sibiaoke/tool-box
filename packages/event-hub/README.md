@@ -1,10 +1,10 @@
-# `@sibiaoke/config`
+# `@sibiaoke/event-hub`
 
-> env of project
+> A event hub for Vue.js
 
 ## Usage
 
 ```
-const config = require('@sibiaoke/config');
+const VueEventHub = require('@sibiaoke/event-hub');
 
 ```

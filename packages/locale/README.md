@@ -1,10 +1,10 @@
-# `@sibiaoke/config`
+# `@sibiaoke/locale`
 
-> env of project
+> Locale config for api
 
 ## Usage
 
 ```
-const config = require('@sibiaoke/config');
+const locale = require('@sibiaoke/locale');
 
 ```
