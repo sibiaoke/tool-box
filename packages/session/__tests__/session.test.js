@@ -48,6 +48,13 @@ describe('load', () => {
     const loadedAuth = getAuthData();
     expect(loadedAuth).toEqual(auth);
   });
+
+  test('saved auth is invalid', () => {
+    const { AUTH_DATA_KEY } = require('../src/constents');
+    localStorage.setItem(AUTH_DATA_KEY, 'Jack');
+    const loadedAuth = getAuthData();
+    expect(loadedAuth).toBeNull();
+  });
 });
 
 describe('update', () => {
@@ -56,5 +63,18 @@ describe('update', () => {
     updateAuthData('name', 'Sam');
     const loadedAuth = getAuthData();
     expect(loadedAuth).toEqual(updatedAuth);
+  });
+
+  test('not login', () => {
+    clear();
+    const result = updateAuthData('name', 'Sam');
+    expect(result).not.toBeTruthy();
+  });
+
+  test('saved auth is invalid', () => {
+    const { AUTH_DATA_KEY } = require('../src/constents');
+    localStorage.setItem(AUTH_DATA_KEY, 'Jack');
+    const result = updateAuthData('name', 'Sam');
+    expect(result).not.toBeTruthy();
   });
 });

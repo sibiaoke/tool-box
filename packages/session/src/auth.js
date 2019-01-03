@@ -20,10 +20,8 @@ export function updateAuthData(key, value) {
     return false;
   }
   let data = getAuthData();
-  if (data) {
-    data = { ...data, [key]: value };
-    setAuthData(data);
-  }
+  data = { ...data, [key]: value };
+  setAuthData(data);
 }
 
 export function isLoggedIn() {
