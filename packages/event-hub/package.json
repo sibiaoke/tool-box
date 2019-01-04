@@ -33,7 +33,7 @@
     "url": "https://github.com/sibiaoke/tool-box/issues"
   },
   "jest": {
-    "coverageDirectory": "./coverage/",
+    "coverageDirectory": "../../coverage/event-hub",
     "collectCoverage": true
   },
   "typings": "types/index.d.ts",

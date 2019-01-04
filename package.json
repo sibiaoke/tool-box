@@ -1,19 +1,40 @@
 {
   "name": "tool-box",
+  "workspaces": [
+    "packages/*"
+  ],
   "private": true,
   "scripts": {
-    "bootstrap": "yarn && lerna bootstrap",
-    "ver": "lerna version --amend --no-git-tag-version --no-push --yes",
-    "lint": "eslint \"packages/**/src/**\"",
-    "build": "lerna run build",
-    "prebuild": "npm run bootstrap"
+    "bootstrap": "yarn && ./node_modules/.bin/lerna bootstrap",
+    "ver": "./node_modules/.bin/lerna version --amend --no-git-tag-version --no-push --yes",
+    "lint": "./node_modules/.bin/eslint \"packages/*/src/**\"",
+    "prelint": "npm run bootstrap",
+    "test": "./node_modules/.bin/lerna run test",
+    "pretest": "npm run lint",
+    "build": "./node_modules/.bin/lerna run build",
+    "prebuild": "npm run test",
+    "publish": "./node_modules/.bin/lerna publish",
+    "pre-publish": "npm run build"
+  },
+  "jest": {
+    "coverageDirectory": "./coverage/",
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+      "packages/*/src/**/*.js"
+    ]
   },
   "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.2.2",
+    "@babel/preset-env": "^7.2.3",
+    "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^10.0.1",
+    "babel-jest": "^23.6.0",
     "eslint": "^5.11.1",
     "eslint-config-prettier": "^3.3.0",
     "eslint-plugin-prettier": "^3.0.1",
     "lerna": "^3.6.0",
+    "jest": "^23.6.0",
     "prettier": "^1.15.3"
   },
   "license": "ISC"

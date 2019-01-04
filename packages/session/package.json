@@ -33,7 +33,7 @@
     "url": "https://github.com/sibiaoke/tool-box/issues"
   },
   "jest": {
-    "coverageDirectory": "./coverage/",
+    "coverageDirectory": "../../coverage/session",
     "collectCoverage": true
   },
   "dependencies": {
