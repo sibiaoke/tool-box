@@ -1,6 +1,6 @@
 {
   "name": "@sibiaoke/event-hub",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A event hub for Vue.js",
   "keywords": [
     "vue",
