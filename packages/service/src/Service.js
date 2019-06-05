@@ -30,18 +30,19 @@ let config = {
   'Cache-Control': 'no-cache'
 };
 
-function formatUrl(path, isApi) {
+function formatUrl(path, isApi, apiPrefix) {
   const isAbsolutePath = /^http+/.test(path);
   if (isAbsolutePath) {
     return path;
   }
   const adjustedPath = path[0] !== '/' ? '/' + path : path;
   // Prepend `/backend` to relative URL, to proxy to API server.
-  return (isApi ? '/api' : '') + adjustedPath;
+  return (isApi ? apiPrefix : '') + adjustedPath;
 }
 
 export default class Service {
-  constructor(cfg) {
+  constructor(cfg, apiPrefix = '/api') {
+    this.apiPrefix = apiPrefix;
     this.cfg = cfg || {};
     let _axios = axios.create();
     // 拦截请求
@@ -107,7 +108,7 @@ export default class Service {
       ...config,
       ...this.cfg,
       ...others,
-      url: formatUrl(url, isApi),
+      url: formatUrl(url, isApi, this.apiPrefix),
       method,
       headers,
       // disable browser's cache
