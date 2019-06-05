@@ -1,6 +1,6 @@
 {
   "name": "@sibiaoke/service",
-  "version": "0.0.2",
+  "version": "0.1.1",
   "description": "Api service",
   "keywords": [
     "api",
@@ -38,8 +38,8 @@
   },
   "dependencies": {
     "@babel/polyfill": "^7.2.5",
-    "@sibiaoke/locale": "^0.0.2",
-    "@sibiaoke/session": "^0.0.2",
+    "@sibiaoke/locale": "^0.1.1",
+    "@sibiaoke/session": "^0.1.1",
     "axios": "^0.18.0",
     "lodash.merge": "^4.6.1",
     "lodash.omitby": "^4.6.0"
