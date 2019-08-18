@@ -41,7 +41,7 @@ function formatUrl(path, isApi, apiPrefix) {
 }
 
 export default class Service {
-  constructor(cfg, apiPrefix = '/api', withCredentials = true) {
+  constructor(cfg, apiPrefix = '/api', { withCredentials = true, language = true } = {}) {
     this.apiPrefix = apiPrefix;
     this.cfg = cfg || {};
     let _axios = axios.create();
@@ -50,7 +50,7 @@ export default class Service {
       config => {
         let conf = merge({}, config, {
           withCredentials,
-          headers: { 'X-LANGUAGE': getServerLocale() }
+          headers: language ? { 'X-LANGUAGE': getServerLocale() } : {}
         });
         const token = getToken();
         if (token && !config.headers.Authorization) {
