@@ -41,14 +41,17 @@ function formatUrl(path, isApi, apiPrefix) {
 }
 
 export default class Service {
-  constructor(cfg, apiPrefix = '/api') {
+  constructor(cfg, apiPrefix = '/api', withCredentials = true) {
     this.apiPrefix = apiPrefix;
     this.cfg = cfg || {};
     let _axios = axios.create();
     // 拦截请求
     _axios.interceptors.request.use(
       config => {
-        let conf = merge({}, config, { headers: { 'X-LANGUAGE': getServerLocale() } });
+        let conf = merge({}, config, {
+          withCredentials,
+          headers: { 'X-LANGUAGE': getServerLocale() }
+        });
         const token = getToken();
         if (token && !config.headers.Authorization) {
           // header 中加入 token
