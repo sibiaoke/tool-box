@@ -70,37 +70,7 @@ export default class Service {
         return response.data;
       },
       error => {
-        let err = {};
-        if (error.response) {
-          const { config: cfg = {} } = error.response;
-          // The request was made, but the server responded with a status code
-          // that falls out of the range of 2xx
-          const e =
-            typeof error.response.data === 'string'
-              ? { error_message: error.response.data }
-              : error.response.data;
-          err = {
-            ...e,
-            status: error.response.status,
-            url: cfg.url || ''
-          };
-        } else {
-          // Something happened in setting up the request that triggered an Error
-          err = error;
-        }
-        const errortext = err.error_message || err.message || codeMessage[err.status];
-        // log to console
-        console.error(err);
-        if (err.status === 401) {
-          // 授权失败， 登录失效或未登录
-          // 清除用户与token信息
-          clearSession();
-          window.location.reload();
-        }
-        const e = new Error(errortext);
-        e.status = err.status;
-        e.response = error.response;
-        throw e;
+        this.handleError(error);
       }
     );
     this.$http = _axios;
@@ -140,5 +110,43 @@ export default class Service {
 
   delete(url, config = {}) {
     return this.request(url, 'DELETE', config);
+  }
+
+  error401() {
+    // 授权失败， 登录失效或未登录
+    // 清除用户与token信息
+    clearSession();
+    window.location.reload();
+  }
+
+  handleError(error) {
+    let err = {};
+    if (error.response) {
+      const { config: cfg = {} } = error.response;
+      // The request was made, but the server responded with a status code
+      // that falls out of the range of 2xx
+      const e =
+        typeof error.response.data === 'string'
+          ? { error_message: error.response.data }
+          : error.response.data;
+      err = {
+        ...e,
+        status: error.response.status,
+        url: cfg.url || ''
+      };
+    } else {
+      // Something happened in setting up the request that triggered an Error
+      err = error;
+    }
+    const errortext = err.error_message || err.message || codeMessage[err.status];
+    // log to console
+    console.error(err);
+    if (this[`error${err.status}`]) {
+      this[`error${err.status}`]();
+    }
+    const e = new Error(errortext);
+    e.status = err.status;
+    e.response = error.response;
+    throw e;
   }
 }
